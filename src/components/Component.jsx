@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import Modals from "./Modals";
+import {Modals} from "./Modals";
 import { useDrag } from "react-dnd";
 import { COMPONENT } from "../Helpers/constants";
 
@@ -14,10 +14,11 @@ const Component = (props) => {
 
   const [open, setOpen] = useState(false);
   const handleOpen = (event) => {
-    setOpen(true)
-    event.stopPropagation();
+    console.log(event.target.class,'aaaaaaaaaaaaaaaaaaaaaaa')
 
-    console.log('compo')
+    event.preventDefault()
+    event.stopPropagation();
+    setOpen(true)
   };
   const handleClose = () => setOpen(false);
 
@@ -50,11 +51,11 @@ const Component = (props) => {
     </div>
 
  {/* MODAL FOR ITEM ID */}
-      <Modals
+      {/* <Modals
         open={open}
         handleClose={handleClose}
         data={data}
-      />
+      /> */}
     </>
   );
 };

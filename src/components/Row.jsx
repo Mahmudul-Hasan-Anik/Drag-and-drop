@@ -3,7 +3,7 @@ import { useDrag } from "react-dnd";
 import { ROW, SIDEBAR_ITEM } from "../Helpers/constants";
 import DropZone from "../components/DropZone";
 import Column from "./Column";
-import Modals from "./Modals";
+import {Modals} from "./Modals";
 
 const style = {};
 const Row = ( {data, components, handleDrop, path} ) => {
@@ -11,7 +11,7 @@ const Row = ( {data, components, handleDrop, path} ) => {
   const [open, setOpen] = useState(false);
   const handleOpen = (event) => {
     event.stopPropagation();
-    setOpen(true)
+    alert('ami')
   }
   const handleClose = () => setOpen(false);
 
@@ -64,6 +64,7 @@ const Row = ( {data, components, handleDrop, path} ) => {
                 onDrop={handleDrop}
                 className="horizontalDrag"
               />
+              
               {renderColumn(column, currentPath)}
             </React.Fragment>
           );

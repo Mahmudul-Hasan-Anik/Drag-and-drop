@@ -4,7 +4,7 @@ import { COLUMN, ROW, SIDEBAR_ITEM } from "../Helpers/constants";
 import DropZone from "../components/DropZone";
 import Component from "../components/Component";
 import { Resizable } from "re-resizable";
-import Modals from "./Modals";
+import {Modals} from "./Modals";
 
 
 const style = {};
@@ -13,11 +13,10 @@ const Column = (props) => {
 
   const [open, setOpen] = useState(false);
   const handleOpen = (event) => {
-    setOpen(true)
+    console.log( event.currentTarget,'aaaaaaaaaaaaaaaa')
     event.stopPropagation();
-
+    setOpen(true)
   };
-
   const handleClose = () => setOpen(false);
 
 
@@ -72,6 +71,7 @@ const Column = (props) => {
               }}
               onDrop={handleDrop}
             />
+
               {renderComponent(component, currentPath)}
           </React.Fragment>
         );
@@ -88,11 +88,11 @@ const Column = (props) => {
     </Resizable>
 
      {/* MODAL FOR ITEM ID */}
-      <Modals
+      {/* <Modals
         open={open}
         handleClose={handleClose}
         data={data}
-      />
+      /> */}
          </>
   );
 };

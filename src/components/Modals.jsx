@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
 
-const Modals = (props) => {
+export const Modals = (props) => {
   return (
      <Modal show={props.open} onHide={props.handleClose}>
         <Modal.Header closeButton>
@@ -13,5 +13,3 @@ const Modals = (props) => {
       </Modal>
   )
 }
-
-export default Modals

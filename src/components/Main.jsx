@@ -21,6 +21,14 @@ const Container = () => {
   const [layout, setLayout] = useState(initialLayout);
   const [components, setComponents] = useState(initialComponents);
 
+  const [open, setOpen] = useState(false);
+  const handleOpen = (event) => {
+    event.stopPropagation();
+    alert('amo')
+  }
+  const handleClose = () => setOpen(false);
+
+
   const handleDropToTrashBin = useCallback(
     (dropZone, item) => {
       const splitItemPath = item.path.split("-");
@@ -124,11 +132,11 @@ const Container = () => {
     <div className="body">
       <div className="sideBar">
         {Object.values(SIDEBAR_ITEMS).map((sideBarItem, index) => (
-          <SideBar key={sideBarItem.id} data={sideBarItem} />
+          <SideBar key={sideBarItem.id} data={sideBarItem}/>
         ))}
       </div>
       <div className="pageContainer">
-        <div className="page">
+        <div className="page" onClick={handleOpen}>
           {layout.map((row, index) => {
             const currentPath = `${index}`;
             
@@ -165,8 +173,13 @@ const Container = () => {
      <div>
       <textarea id="text" name="text" rows="10" cols="100" value={JSON.stringify(layout, null ,5)} ></textarea> 
      </div>
-      </div>
 
+     {/* <Modals
+        open={open}
+        handleClose={handleClose}
+        data={data}
+      /> */}
+      </div> 
     </div>
   );
 };

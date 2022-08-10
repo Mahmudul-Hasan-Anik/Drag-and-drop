@@ -1,5 +1,5 @@
 import shortid from "shortid";
-import { ROW, COLUMN, COMPONENT, SIDEBAR_ITEM } from "./constants";
+import { ROW, COLUMN, COMPONENT } from "./constants";
 
 // a little function to help us with reordering the result
 export const reorder = (list, startIndex, endIndex) => {
@@ -140,7 +140,6 @@ export const handleMoveToDifferentParent = (
     type: ROW,
     id: shortid.generate()
   };
-  console.log(ROW_STRUCTURE)
   switch (splitDropZonePath.length) {
     case 1: {
       // moving column outside into new row made on the fly
@@ -155,7 +154,8 @@ export const handleMoveToDifferentParent = (
           ...ROW_STRUCTURE,
           children: [item]
         };
-      } else {
+      } 
+      else {
         // moving component outside into new row made on the fly
         newLayoutStructure = {
           ...ROW_STRUCTURE,
@@ -198,31 +198,59 @@ export const handleMoveSidebarComponentIntoParent = (
   item
 ) => {
   let newLayoutStructure;
+  console.log(item.type, 'aaaaaaaaaa')
   switch (splitDropZonePath.length) {
-    // case 1: {
+    case 1: {
+      if(item){
+        newLayoutStructure = {
+          type: ROW,
+          id: shortid.generate(),
+          children: []
+        };
+        break;
+      }else{
+        newLayoutStructure = {
+          type: ROW,
+          id: shortid.generate(),
+          children: [{type: COLUMN, id: shortid.generate(), children: []}]
+        };
+        break;
+      }
+    }
+    case 2: {
+      if(item){
+        newLayoutStructure = {
+          type: COLUMN,
+          id: shortid.generate(),
+          children: []
+        };
+        break;
+      }else{
+        newLayoutStructure = {
+          type: COLUMN,
+          id: shortid.generate(),
+          children: [item]
+        };
+        break;
+      }
+    }
+    // case 3:{
     //   newLayoutStructure = {
     //     type: ROW,
     //     id: shortid.generate(),
-    //     children: []
+    //     children: [item]
     //   };
     //   break;
     // }
-    case 1: {
-      newLayoutStructure = {
-        type: ROW,
-        id: shortid.generate(),
-        children: [{ type: COLUMN, id: shortid.generate(), children: [] }]
-      };
-      break;
-    }
-    case 2: {
-      newLayoutStructure = {
-        type: COLUMN,
-        id: shortid.generate(),
-        children: []
-      };
-      break;
-    }
+    
+    // case 4: {
+    //   newLayoutStructure = {
+    //     type: COLUMN,
+    //     id: shortid.generate(),
+    //     children: [item]
+    //   };
+    //   break;
+    // }
     default: {
       newLayoutStructure = item;
     }

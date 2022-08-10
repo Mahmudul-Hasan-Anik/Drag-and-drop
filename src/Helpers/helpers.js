@@ -1,5 +1,5 @@
 import shortid from "shortid";
-import { ROW, COLUMN, COMPONENT } from "./constants";
+import { ROW, COLUMN, COMPONENT, SIDEBAR_ITEM } from "./constants";
 
 // a little function to help us with reordering the result
 export const reorder = (list, startIndex, endIndex) => {
@@ -126,6 +126,8 @@ export const handleMoveToDifferentParent = (
   splitDropZonePath,
   splitItemPath,
   item
+
+  
 ) => {
   let newLayoutStructure;
   const COLUMN_STRUCTURE = {
@@ -138,11 +140,17 @@ export const handleMoveToDifferentParent = (
     type: ROW,
     id: shortid.generate()
   };
-
+  console.log(ROW_STRUCTURE)
   switch (splitDropZonePath.length) {
     case 1: {
       // moving column outside into new row made on the fly
-      if (item.type === COLUMN) {
+      if(item.type === ROW){
+        newLayoutStructure = {
+          ...ROW_STRUCTURE,
+          children: []
+        };
+      }
+      else if (item.type === COLUMN) {
         newLayoutStructure = {
           ...ROW_STRUCTURE,
           children: [item]
@@ -191,11 +199,19 @@ export const handleMoveSidebarComponentIntoParent = (
 ) => {
   let newLayoutStructure;
   switch (splitDropZonePath.length) {
+    // case 1: {
+    //   newLayoutStructure = {
+    //     type: ROW,
+    //     id: shortid.generate(),
+    //     children: []
+    //   };
+    //   break;
+    // }
     case 1: {
       newLayoutStructure = {
         type: ROW,
         id: shortid.generate(),
-        children: [{ type: COLUMN, id: shortid.generate(), children: [item] }]
+        children: [{ type: COLUMN, id: shortid.generate(), children: [] }]
       };
       break;
     }
@@ -203,7 +219,7 @@ export const handleMoveSidebarComponentIntoParent = (
       newLayoutStructure = {
         type: COLUMN,
         id: shortid.generate(),
-        children: [item]
+        children: []
       };
       break;
     }

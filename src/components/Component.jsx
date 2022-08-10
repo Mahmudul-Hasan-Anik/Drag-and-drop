@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
-import { Modal } from "react-bootstrap";
+import Modals from "./Modals";
 import { useDrag } from "react-dnd";
-import { COMPONENT,ROW } from "../Helpers/constants";
+import { COMPONENT } from "../Helpers/constants";
 
 const style = {
   border: "1px dashed black",
@@ -9,10 +9,17 @@ const style = {
   backgroundColor: "white",
   cursor: "move"
 };
-const Component = ({ data, components, path }) => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+const Component = (props) => {
+  const {data, components,path} = props
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = (event) => {
+    setOpen(true)
+    event.stopPropagation();
+
+    console.log('compo')
+  };
+  const handleClose = () => setOpen(false);
 
   const ref = useRef(null);
 
@@ -36,19 +43,18 @@ const Component = ({ data, components, path }) => {
       ref={ref}
       style={{ ...style, opacity }}
       className="component draggable"
-      onClick={handleShow}
+      onClick={handleOpen}
     >
       <div>{data.id}</div>
       <div>{component.content}</div>
     </div>
 
  {/* MODAL FOR ITEM ID */}
-    <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Item ID</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{data.id}</Modal.Body>
-      </Modal>
+      <Modals
+        open={open}
+        handleClose={handleClose}
+        data={data}
+      />
     </>
   );
 };

@@ -4,10 +4,22 @@ import { COLUMN, ROW, SIDEBAR_ITEM } from "../Helpers/constants";
 import DropZone from "../components/DropZone";
 import Component from "../components/Component";
 import { Resizable } from "re-resizable";
+import Modals from "./Modals";
 
 
 const style = {};
-const Column = ({ data, components, handleDrop, path }) => {
+const Column = (props) => {
+  const { data, components, handleDrop, path } = props
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = (event) => {
+    setOpen(true)
+    event.stopPropagation();
+
+  };
+
+  const handleClose = () => setOpen(false);
+
 
   const ref = useRef(null);
 
@@ -38,13 +50,14 @@ const Column = ({ data, components, handleDrop, path }) => {
   };
 
   return (
-
+<>
   <Resizable className='resize'>
 
     <div
       ref={ref}
       style={{ ...style, opacity }}
       className="base draggable column "
+      onClick={handleOpen}
     >
       {data.type}
       {data.children.map((component, index) => {
@@ -59,7 +72,7 @@ const Column = ({ data, components, handleDrop, path }) => {
               }}
               onDrop={handleDrop}
             />
-            {renderComponent(component, currentPath)}
+              {renderComponent(component, currentPath)}
           </React.Fragment>
         );
       })}
@@ -73,6 +86,14 @@ const Column = ({ data, components, handleDrop, path }) => {
       />
     </div>
     </Resizable>
+
+     {/* MODAL FOR ITEM ID */}
+      <Modals
+        open={open}
+        handleClose={handleClose}
+        data={data}
+      />
+         </>
   );
 };
 export default Column;

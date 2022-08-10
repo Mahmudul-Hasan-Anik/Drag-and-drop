@@ -5,7 +5,6 @@ export const ROW = "row";
 export const COLUMN = "column";
 export const COMPONENT = "component";
 
-export const ROWS = 'rows'
 
 export const SIDEBAR_ITEMS = [
   {
@@ -66,22 +65,5 @@ export const SIDEBAR_ITEMS = [
   },
 ];
 
-export const ROW_ITEMS = [
-  {
-    id: shortid.generate(),
-    type: ROWS,
-    component: {
-      type: "rows",
-      content: "New row"
-    }
-  },
-  {
-    id: shortid.generate(),
-    type: COLUMN,
-    component: {
-      type: "col",
-      content: "New row"
-    }
-  },
-]
+
 

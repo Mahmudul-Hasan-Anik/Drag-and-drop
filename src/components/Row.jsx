@@ -1,11 +1,19 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useDrag } from "react-dnd";
 import { ROW, SIDEBAR_ITEM } from "../Helpers/constants";
 import DropZone from "../components/DropZone";
 import Column from "./Column";
+import Modals from "./Modals";
 
 const style = {};
 const Row = ( {data, components, handleDrop, path} ) => {
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = (event) => {
+    event.stopPropagation();
+    setOpen(true)
+  }
+  const handleClose = () => setOpen(false);
 
   const ref = useRef(null);
 
@@ -39,10 +47,10 @@ const Row = ( {data, components, handleDrop, path} ) => {
   };
 
   return (
-    <div ref={ref} style={{ ...style, opacity }} className="base draggable row ">
-      {data.type }
+    <div ref={ref} style={{ ...style, opacity }} className="base draggable row " >
+      {data.id }
 
-      <div className="columns ">
+      <div className="columns" onClick={handleOpen}>
         
         {data.children.map((column, index) => {
           const currentPath = `${path}-${index}`;
@@ -70,6 +78,12 @@ const Row = ( {data, components, handleDrop, path} ) => {
           isLast
         />
       </div>
+
+      <Modals
+        open={open}
+        handleClose={handleClose}
+        data={data}
+      />
     </div>
   );
 };

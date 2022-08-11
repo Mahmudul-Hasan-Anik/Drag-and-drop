@@ -13,10 +13,7 @@ const Component = (props) => {
   const {data, components,path} = props
 
   const [open, setOpen] = useState(false);
-  const handleOpen = (event) => {
-    console.log(event.target.class,'aaaaaaaaaaaaaaaaaaaaaaa')
-
-    event.preventDefault()
+  const handleOpen = (event, id) => {
     event.stopPropagation();
     setOpen(true)
   };
@@ -51,11 +48,11 @@ const Component = (props) => {
     </div>
 
  {/* MODAL FOR ITEM ID */}
-      {/* <Modals
+      <Modals
         open={open}
         handleClose={handleClose}
         data={data}
-      /> */}
+      />
     </>
   );
 };

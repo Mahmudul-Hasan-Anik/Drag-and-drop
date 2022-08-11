@@ -12,7 +12,7 @@ import {
   handleRemoveItemFromLayout
 } from "../Helpers/helpers";
 
-import { SIDEBAR_ITEMS, SIDEBAR_ITEM, COMPONENT, COLUMN, ROW, ROW_ITEMS } from "../Helpers/constants";
+import { SIDEBAR_ITEMS, SIDEBAR_ITEM, COMPONENT, COLUMN } from "../Helpers/constants";
 import shortid from "shortid";
 
 const Container = () => {
@@ -20,13 +20,6 @@ const Container = () => {
   const initialComponents = initialData.components;
   const [layout, setLayout] = useState(initialLayout);
   const [components, setComponents] = useState(initialComponents);
-
-  const [open, setOpen] = useState(false);
-  const handleOpen = (event) => {
-    event.stopPropagation();
-    alert('amo')
-  }
-  const handleClose = () => setOpen(false);
 
 
   const handleDropToTrashBin = useCallback(
@@ -39,7 +32,6 @@ const Container = () => {
 
   const handleDrop = useCallback(
     (dropZone, item) => {
-
       const splitDropZonePath = dropZone.path.split("-");
       const pathToDropZone = splitDropZonePath.slice(0, -1).join("-");
 
@@ -50,7 +42,6 @@ const Container = () => {
 
       // sidebar into
       if (item.type === SIDEBAR_ITEM) {
-        // 1. Move sidebar item into page
         const newComponent = {
           id: shortid.generate(),
           ...item.component
@@ -72,14 +63,10 @@ const Container = () => {
         );
         return;
       }
-
-      // move down here since sidebar items dont have path
       const splitItemPath = item.path.split("-");
       const pathToItem = splitItemPath.slice(0, -1).join("-");
 
-      // 2. Pure move (no create)
       if (splitItemPath.length === splitDropZonePath.length) {
-        // 2.a. move within parent
         if (pathToItem === pathToDropZone) {
           setLayout(
             handleMoveWithinParent(layout, splitDropZonePath, splitItemPath)
@@ -87,8 +74,6 @@ const Container = () => {
           return;
         }
 
-        // 2.b. OR move different parent
-        // TODO FIX columns. item includes children
         setLayout(
           handleMoveToDifferentParent(
             layout,
@@ -127,7 +112,6 @@ const Container = () => {
   };
 
 
-//
   return (
     <div className="body">
       <div className="sideBar">
@@ -136,10 +120,10 @@ const Container = () => {
         ))}
       </div>
       <div className="pageContainer">
-        <div className="page" onClick={handleOpen}>
+        <div className="page">
           {layout.map((row, index) => {
             const currentPath = `${index}`;
-            
+
             return (
               <div key={row.id}>
                 <DropZone
@@ -173,12 +157,6 @@ const Container = () => {
      <div>
       <textarea id="text" name="text" rows="10" cols="100" value={JSON.stringify(layout, null ,5)} ></textarea> 
      </div>
-
-     {/* <Modals
-        open={open}
-        handleClose={handleClose}
-        data={data}
-      /> */}
       </div> 
     </div>
   );

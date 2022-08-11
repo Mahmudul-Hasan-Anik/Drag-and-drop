@@ -15,8 +15,6 @@ export const SideBar = ({ data }) => {
 
   const [open, setOpen] = useState(false);
   const handleOpen = (event) => {
-    console.log( event.currentTarget,'aaaaaaaaaaaaaaaa')
-    event.stopPropagation();
     setOpen(true)
   };
   const handleClose = () => setOpen(false);

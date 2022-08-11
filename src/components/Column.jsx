@@ -1,6 +1,6 @@
-import React, { useRef, useState,useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { useDrag } from "react-dnd";
-import { COLUMN, ROW, SIDEBAR_ITEM } from "../Helpers/constants";
+import { COLUMN } from "../Helpers/constants";
 import DropZone from "../components/DropZone";
 import Component from "../components/Component";
 import { Resizable } from "re-resizable";
@@ -11,14 +11,12 @@ const style = {};
 const Column = (props) => {
   const { data, components, handleDrop, path } = props
 
-  const [open, setOpen] = useState(false);
+  const [openCol, setOpen] = useState(false);
   const handleOpen = (event) => {
-    console.log( event.currentTarget,'aaaaaaaaaaaaaaaa')
     event.stopPropagation();
     setOpen(true)
   };
   const handleClose = () => setOpen(false);
-
 
   const ref = useRef(null);
 
@@ -44,6 +42,7 @@ const Column = (props) => {
         data={component}
         components={components}
         path={currentPath}
+        openCol={openCol}
       />
     );
   };
@@ -86,13 +85,12 @@ const Column = (props) => {
       />
     </div>
     </Resizable>
-
      {/* MODAL FOR ITEM ID */}
-      {/* <Modals
-        open={open}
+      <Modals
+        open={openCol}
         handleClose={handleClose}
         data={data}
-      /> */}
+      />
          </>
   );
 };

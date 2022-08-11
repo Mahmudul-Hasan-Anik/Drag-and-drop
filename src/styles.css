@@ -74,7 +74,7 @@ body {
   flex: 1 1 auto;
   padding: 10px;
   min-width: 160px;
-  /* cursor: pointer !important; */
+  cursor: pointer !important;
 }
 
 .columns {

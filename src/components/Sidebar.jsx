@@ -14,7 +14,7 @@ export const SideBar = ({ data }) => {
 
 
   const [open, setOpen] = useState(false);
-  const handleOpen = (event) => {
+  const handleOpen = () => {
     setOpen(true)
   };
   const handleClose = () => setOpen(false);

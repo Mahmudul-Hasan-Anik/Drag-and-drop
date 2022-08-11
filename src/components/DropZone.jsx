@@ -6,6 +6,7 @@ import { COMPONENT, SIDEBAR_ITEM, ROW, COLUMN } from "../Helpers/constants";
 const ACCEPTS = [SIDEBAR_ITEM, COMPONENT, ROW, COLUMN];
 
 const DropZone = ({ data, onDrop, isLast, className }) => {
+  console.log(data)
 
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: ACCEPTS,
@@ -19,15 +20,11 @@ const DropZone = ({ data, onDrop, isLast, className }) => {
 
       // sidebar items can always be dropped anywhere
       if (!itemPath) {
-        // if (data.rowCount >= 4) {
-        //  return false;
-        // }
         return true;
       }
 
       const splitItemPath = itemPath.split("-");
 
-      // limit columns when dragging from one row to another row
       const dropZonePathRowIndex = splitDropZonePath[0];
       const itemPathRowIndex = splitItemPath[0];
       const diffRow = dropZonePathRowIndex !== itemPathRowIndex;
@@ -39,14 +36,11 @@ const DropZone = ({ data, onDrop, isLast, className }) => {
         return false;
       }
 
-      // Invalid (Can't drop a parent element (row) into a child (column))
       const parentDropInChild = splitItemPath.length < splitDropZonePath.length;
       if (parentDropInChild) return false;
 
-      // Current item can't possible move to it's own location
       if (itemPath === dropZonePath) return false;
 
-      // Current area
       if (splitItemPath.length === splitDropZonePath.length) {
         const pathToItem = splitItemPath.slice(0, -1).join("-");
         const currentItemIndex = Number(splitItemPath.slice(-1)[0]);
